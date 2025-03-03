@@ -30,7 +30,7 @@ Proyek ini adalah web sederhana yang menampilkan daftar surah dan detail surah d
 4. Gunakan dropdown qori untuk mengganti suara bacaan
 
 ## 🖼️ Demo
-
+[https://anshorfalahi.github.io/quran-web/](https://anshorfalahi.github.io/quran-web/)
 
 ## 📜 Lisensi
 
