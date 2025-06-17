@@ -29,7 +29,7 @@
             const surahNumber = urlParams.get('surah');
             if (!surahNumber) return;
     
-            const response = await fetch(`https://quran-api-id.vercel.app/surahs/${surahNumber}`);
+            const response = await fetch(`https://quran-api-idn.vercel.app/surahs/${surahNumber}`);
             const surah = await response.json();
             const detailContainer = document.getElementById('surah-detail');
             const ayahContainer = document.getElementById('ayah-list');
