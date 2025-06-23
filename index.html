@@ -1,31 +1,61 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Surah - Al-Qur'an</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        };
+    </script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 dark:bg-gray-900 dark:text-white">
     <div class="container mx-auto p-5">
-        <h1 class="text-2xl font-bold text-center mb-5">Daftar Surah dalam Al-Qur'an</h1>
-        <input type="text" id="search" placeholder="Cari Surah..." class="p-2 border rounded w-full mb-5">
+        <div class="flex justify-between items-center mb-5">
+            <h1 class="text-2xl font-bold text-center w-full">Daftar Surah dalam Al-Qur'an</h1>
+            <button id="toggle-mode" class="absolute top-5 right-5 text-2xl transition-transform hover:scale-125">
+                🌙
+            </button>
+        </div>
+        <input type="text" id="search" placeholder="Cari Surah..." class="p-2 border rounded w-full mb-5 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
         <div id="surah-list" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
     </div>
-    
+
     <script>
+        const toggleBtn = document.getElementById('toggle-mode');
+        const html = document.documentElement;
+
+        function setIcon() {
+            toggleBtn.textContent = html.classList.contains('dark') ? '☀️' : '🌙';
+        }
+
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+
+        setIcon();
+
+        toggleBtn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+            setIcon();
+        });
+
         async function fetchSurahs() {
             const response = await fetch('https://quran-api-idn.vercel.app/surahs');
             const surahs = await response.json();
             const container = document.getElementById('surah-list');
             const searchInput = document.getElementById('search');
-            
+
             function renderSurahs(filter = "") {
                 container.innerHTML = "";
                 surahs.filter(surah => surah.name.toLowerCase().includes(filter.toLowerCase()) || surah.translation.toLowerCase().includes(filter.toLowerCase()))
                     .forEach(surah => {
                         const surahCard = document.createElement('div');
-                        surahCard.className = 'bg-white p-4 rounded-lg shadow-md hover:bg-gray-200 cursor-pointer';
+                        surahCard.className = 'bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer';
                         surahCard.innerHTML = `
                             <h2 class="text-lg font-semibold">${surah.number}. ${surah.name} (${surah.translation})</h2>
                             <p><strong>Ayat:</strong> ${surah.numberOfAyahs}</p>
@@ -36,11 +66,11 @@
                         container.appendChild(surahCard);
                     });
             }
-            
+
             searchInput.addEventListener("input", () => renderSurahs(searchInput.value));
             renderSurahs();
         }
-        
+
         fetchSurahs();
     </script>
 </body>
