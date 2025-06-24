@@ -1,77 +1,23 @@
 <!DOCTYPE html>
-<html lang="id" class="">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Surah - Al-Qur'an</title>
+    <title>Al-Qur'an</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class'
-        };
-    </script>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 dark:text-white">
-    <div class="container mx-auto p-5">
-        <div class="flex justify-between items-center mb-5">
-            <h1 class="text-2xl font-bold text-center w-full">Daftar Surah dalam Al-Qur'an</h1>
-            <button id="toggle-mode" class="absolute top-5 right-5 text-2xl transition-transform hover:scale-125">
-                🌙
-            </button>
+<body class="bg-gray-100 dark:bg-gray-900">
+    <div class="container mx-auto p-4">
+        <div class="header flex justify-between items-center">
+            <h1 class="text-2xl font-bold">📖 Al-Qur'an</h1>
+            <a href="bookmark.html" class="fixed bottom-4 right-4 bg-yellow-500 px-4 py-2 rounded text-white shadow">⭐ Bookmark</a>
+            <button id="toggle-theme" class="text-2xl">🌙</button>
         </div>
-        <input type="text" id="search" placeholder="Cari Surah..." class="p-2 border rounded w-full mb-5 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
-        <div id="surah-list" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+        <input id="search" placeholder="Cari Surah..." class="w-full mt-4 p-2 rounded">
+        <div id="surah-list" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4"></div>
     </div>
-
-    <script>
-        const toggleBtn = document.getElementById('toggle-mode');
-        const html = document.documentElement;
-
-        function setIcon() {
-            toggleBtn.textContent = html.classList.contains('dark') ? '☀️' : '🌙';
-        }
-
-        if (localStorage.getItem('theme') === 'dark' || 
-            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            html.classList.add('dark');
-        }
-
-        setIcon();
-
-        toggleBtn.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-            setIcon();
-        });
-
-        async function fetchSurahs() {
-            const response = await fetch('https://quran-api-idn.vercel.app/surahs');
-            const surahs = await response.json();
-            const container = document.getElementById('surah-list');
-            const searchInput = document.getElementById('search');
-
-            function renderSurahs(filter = "") {
-                container.innerHTML = "";
-                surahs.filter(surah => surah.name.toLowerCase().includes(filter.toLowerCase()) || surah.translation.toLowerCase().includes(filter.toLowerCase()))
-                    .forEach(surah => {
-                        const surahCard = document.createElement('div');
-                        surahCard.className = 'bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer';
-                        surahCard.innerHTML = `
-                            <h2 class="text-lg font-semibold">${surah.number}. ${surah.name} (${surah.translation})</h2>
-                            <p><strong>Ayat:</strong> ${surah.numberOfAyahs}</p>
-                            <p><strong>Revelation:</strong> ${surah.revelation}</p>
-                            <p>${surah.description.substring(0, 100)}...</p>
-                        `;
-                        surahCard.onclick = () => window.location.href = `result.html?surah=${surah.number}`;
-                        container.appendChild(surahCard);
-                    });
-            }
-
-            searchInput.addEventListener("input", () => renderSurahs(searchInput.value));
-            renderSurahs();
-        }
-
-        fetchSurahs();
-    </script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/index.js"></script>
 </body>
 </html>

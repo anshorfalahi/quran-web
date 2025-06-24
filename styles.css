@@ -1,0 +1,163 @@
+:root {
+    --font-size-base: 16px;
+    --font-size-arabic: 2.8rem; 
+    --line-height-arabic: 3.5rem;
+}
+
+html {
+    font-size: var(--font-size);
+}
+
+body {
+    background-color: #f9fafb !important; /* abu-abu terang */
+    color: #111827 !important; /* abu-abu gelap */
+    transition: background-color 0.3s, color 0.3s;
+    font-family: 'Scheherazade New', serif;
+}
+
+.arabic-text {
+    direction: rtl;
+    text-align: right;
+    font-size: var(--font-size-arabic);
+    font-family: 'Scheherazade', 'Amiri', 'Lateef', 'Noto Naskh Arabic', serif;
+    unicode-bidi: isolate;
+    line-height: var(--line-height-arabic);
+    margin-bottom: 1rem;
+}
+
+
+.dark body, .dark {
+    background-color: #111827 !important; /* dark mode */
+    color: #f9fafb !important;
+}
+
+.bg-white {
+    background-color: #ffffff !important;
+}
+
+.dark .bg-white {
+    background-color: #1f2937 !important;
+}
+
+button {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* Tajwid Styles */
+.tajwid {
+    font-weight: bold;
+    display: inline;
+    padding: 0 1px;
+    border-radius: 4px;
+}
+
+/* Nun Sukun & Tanwin */
+.tajwid.izhar-halqi { color: #22c55e; }
+.tajwid.idgham-bighunnah { color: #facc15; }
+.tajwid.idgham-bilaghunnah { color: #eab308; }
+.tajwid.iqlab { color: #a855f7; }
+.tajwid.ikhfa-haqiqi { color: #06b6d4; }
+
+/* Mim Sukun */
+.tajwid.ikhfa-syafawi { color: #0ea5e9; }
+.tajwid.idgham-mimi { color: #ec4899; }
+.tajwid.izhar-syafawi { color: #10b981; }
+
+/* Qalqalah */
+.tajwid.qalqalah-sugra { color: #f97316; }
+.tajwid.qalqalah-kubra { color: #ea580c; }
+
+/* Ghunnah Musyaddah */
+.tajwid.ghunnah-musyaddah { color: #ef4444; }
+
+/* Alif Lam */
+.tajwid.idzhar-qamariyah { color: #84cc16; }
+.tajwid.idgham-syamsiyah { color: #fb7185; }
+
+/* Mad (Ringkasan Utama) */
+.tajwid.mad-wajib { color: #dc2626; }
+.tajwid.mad-jaiz { color: #f43f5e; }
+.tajwid.mad-aridh { color: #9333ea; }
+.tajwid.mad-thabii { color: #2563eb; }
+.tajwid.mad-layyin { color: #64748b; }
+.tajwid.mad-badal { color: #0d9488; }
+.tajwid.mad-iwad { color: #ca8a04; }
+
+/* Lain-lain */
+.tajwid.idgham-mutajanisain { color: #7c3aed; }
+.tajwid.idgham-mutamathilain { color: #0369a1; }
+.tajwid.idgham-mutaqaribain { color: #c026d3; }
+
+
+.tooltip {
+  position: relative;
+  cursor: help;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%; /* posisikan di atas elemen */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    max-height: 70vh; /* lebih kecil dari sebelumnya */
+    overflow-y: auto;
+    width: 90%;
+    max-width: 600px; /* maksimal lebar untuk tampilan desktop */
+    position: relative;
+}
+
+.dark .modal-content {
+    background: #1f2937;
+    color: white;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --font-size-arabic: 2.3rem;
+        --line-height-arabic: 3rem;
+    }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmark</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 p-5">
+    <button onclick="history.back()" class="mb-4 px-4 py-2 rounded bg-gray-600 text-white">← Kembali</button>
+    <h2 class="text-2xl font-bold mb-4">Daftar Bookmark</h2>
+    <div id="bookmark-list"></div>
+
+    <script>
+        const bookmarkList = document.getElementById('bookmark-list');
+        const favs = JSON.parse(localStorage.getItem('favs') || '[]');
+
+        if (!favs.length) bookmarkList.innerHTML = 'Belum ada bookmark.';
+
+        favs.forEach(async fav => {
+            const [surahNum, ayahNum] = fav.split(':');
+            const response = await fetch(`https://quran-api-idn.vercel.app/surahs/${surahNum}`);
+            const surah = await response.json();
+            const ayah = surah.ayahs.find(a => a.number.inSurah == ayahNum);
+
+            const item = document.createElement('div');
+            item.className = 'p-3 bg-white dark:bg-gray-800 rounded shadow mb-2';
+            item.innerHTML = `
+                <h4>${surah.name} (${surah.translation}) - Ayat ${ayahNum}</h4>
+                <p>${ayah.arab}</p>
+                <p>${ayah.translation}</p>
+                <button onclick="location.href='result.html?surah=${surahNum}'" class="mt-2 bg-blue-500 text-white px-2 py-1 rounded">Buka Surah</button>
+            `;
+            bookmarkList.appendChild(item);
+        });
+    </script>
+</body>
+</html>
